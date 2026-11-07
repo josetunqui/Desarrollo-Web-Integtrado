@@ -15,3 +15,4 @@ export const authGuard: CanActivateFn = (route, state) => {
     queryParams: { volver: state.url },
   });
 };
+

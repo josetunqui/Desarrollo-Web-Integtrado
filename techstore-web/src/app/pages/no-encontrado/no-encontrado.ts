@@ -8,3 +8,4 @@ import { RouterLink } from '@angular/router';
   styleUrl: './no-encontrado.scss',
 })
 export class NoEncontrado {}
+

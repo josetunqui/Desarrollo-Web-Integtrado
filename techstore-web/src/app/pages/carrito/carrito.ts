@@ -12,3 +12,4 @@ import { CarritoService } from '../../services/carrito-service';
 export class Carrito {
   protected carrito = inject(CarritoService);
 }
+

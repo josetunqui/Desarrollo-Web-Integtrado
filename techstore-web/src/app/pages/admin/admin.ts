@@ -17,3 +17,4 @@ export class Admin {
     this.lista().reduce((suma, p) => suma + p.precio * p.stock, 0)
   );
 }
+

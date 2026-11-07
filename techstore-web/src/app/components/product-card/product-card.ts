@@ -28,3 +28,4 @@ export class ProductCard {
     this.favorito.emit(this.producto().id);
   }
 }
+

@@ -24,3 +24,4 @@ export class Login {
     this.router.navigateByUrl(this.volver() ?? '/admin');
   }
 }
+

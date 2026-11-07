@@ -21,3 +21,4 @@ export class Header {
     this.router.navigate(['/inicio']);
   }
 }
+

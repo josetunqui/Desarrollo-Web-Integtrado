@@ -33,3 +33,4 @@ export class ProductoDetalle {
     this.router.navigate(['/catalogo']);
   }
 }
+

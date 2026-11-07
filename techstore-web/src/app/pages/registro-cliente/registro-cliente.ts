@@ -150,3 +150,4 @@ export class RegistroCliente {
     this.clienteRegistrado.set(null);
   }
 }
+

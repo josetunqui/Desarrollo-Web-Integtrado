@@ -30,3 +30,4 @@ export function camposIgualesValidator(campo: string, confirmacion: string): Val
     return valor1 === valor2 ? null : { passwordsNoCoinciden: true };
   };
 }
+

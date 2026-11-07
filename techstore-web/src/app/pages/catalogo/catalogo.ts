@@ -35,3 +35,4 @@ export class Catalogo {
     setTimeout(() => this.mensaje.set(''), 3000);
   }
 }
+

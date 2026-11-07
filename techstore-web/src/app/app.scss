@@ -1,0 +1,10 @@
+@use '../scss/variables' as v;
+
+.pie {
+  text-align: center;
+  padding: 24px;
+  color: v.$gris-texto;
+  font-size: 13px;
+  border-top: 1px solid v.$gris-borde;
+  margin-top: 40px;
+}

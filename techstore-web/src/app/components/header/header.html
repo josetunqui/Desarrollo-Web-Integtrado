@@ -1,0 +1,19 @@
+<header class="header">
+  <a routerLink="/inicio" class="logo">TechStore <span>Perú</span></a>
+
+  <nav class="menu">
+    <a routerLink="/inicio" routerLinkActive="activo" [routerLinkActiveOptions]="{ exact: true }">Inicio</a>
+    <a routerLink="/catalogo" routerLinkActive="activo">Catálogo</a>
+    <a routerLink="/registro" routerLinkActive="activo">Registro</a>
+    <a routerLink="/admin" routerLinkActive="activo">Admin</a>
+    <a routerLink="/carrito" routerLinkActive="activo">
+      Carrito <span class="badge">{{ carrito.cantidadTotal() }}</span>
+    </a>
+
+    @if (auth.logueado()) {
+      <button class="btn-salir" (click)="salir()">Salir</button>
+    } @else {
+      <a routerLink="/login" routerLinkActive="activo">Ingresar</a>
+    }
+  </nav>
+</header>

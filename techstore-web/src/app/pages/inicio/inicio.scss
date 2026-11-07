@@ -1,0 +1,50 @@
+@use '../../../scss/variables' as v;
+@use '../../../scss/mixins' as m;
+
+.hero {
+  @include m.tarjeta(36px);
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+  background: #fff;
+  border-left: 6px solid v.$rojo-utp;
+
+  h1 {
+    color: v.$rojo-utp;
+    margin: 0;
+    font-size: 32px;
+  }
+
+  p {
+    font-size: 17px;
+    color: v.$gris-texto;
+    margin: 0;
+  }
+
+  .enlaces {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 12px;
+    margin-top: 12px;
+
+    a {
+      display: inline-block;
+      background: v.$rojo-utp;
+      color: #fff;
+      padding: 10px 18px;
+      border-radius: v.$radio;
+      text-decoration: none;
+      font-weight: 600;
+
+      &:nth-child(2) {
+        background: v.$negro;
+      }
+
+      &:nth-child(3) {
+        background: #fff;
+        color: v.$rojo-utp;
+        border: 2px solid v.$rojo-utp;
+      }
+    }
+  }
+}

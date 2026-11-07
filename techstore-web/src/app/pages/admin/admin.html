@@ -1,0 +1,32 @@
+<h2>Panel de Administración - TechStore</h2>
+<p class="nota">Esta pantalla utiliza carga diferida (lazy loading) y está protegida por <code>authGuard</code>.</p>
+
+<div class="kpis">
+  <div class="kpi">
+    <span class="etiqueta">Total Productos</span>
+    <strong>{{ lista().length }}</strong>
+  </div>
+  <div class="kpi">
+    <span class="etiqueta">Valor del Inventario</span>
+    <strong>{{ valorInventario() | currency:'PEN':'S/ ' }}</strong>
+  </div>
+  <div class="kpi">
+    <span class="etiqueta">Productos con Stock Bajo</span>
+    <strong class="alerta">{{ bajoStock().length }}</strong>
+  </div>
+</div>
+
+<div class="seccion-stock">
+  <h3>Alertas de Stock Bajo (&lt; 5 unidades)</h3>
+  <ul class="lista-alerta">
+    @for (p of bajoStock(); track p.id) {
+      <li>
+        <span class="nombre">{{ p.nombre }}</span>
+        <span class="cat">{{ p.categoria }}</span>
+        <span class="unidades">{{ p.stock }} unidades disponibles</span>
+      </li>
+    } @empty {
+      <li class="sin-alertas">Todos los productos tienen stock suficiente.</li>
+    }
+  </ul>
+</div>

@@ -1,0 +1,44 @@
+@use '../../../scss/variables' as v;
+
+.filtros {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 12px;
+  margin-bottom: 20px;
+
+  a {
+    text-transform: capitalize;
+    text-decoration: none;
+    padding: 7px 16px;
+    border-radius: v.$radio;
+    background: #fff;
+    color: v.$negro;
+    font-weight: 500;
+    box-shadow: 0 1px 3px rgba(0, 0, 0, 0.08);
+
+    &.activo {
+      background: v.$rojo-utp;
+      color: #fff;
+    }
+  }
+}
+
+.aviso {
+  background: v.$verde-ok;
+  color: #fff;
+  padding: 10px 16px;
+  border-radius: v.$radio;
+  margin-bottom: 16px;
+  font-weight: 500;
+}
+
+.grilla {
+  display: grid;
+  gap: 18px;
+  grid-template-columns: repeat(auto-fill, minmax(240px, 1fr));
+}
+
+.vacio {
+  color: v.$gris-texto;
+  font-style: italic;
+}

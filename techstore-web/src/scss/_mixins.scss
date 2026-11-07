@@ -1,0 +1,23 @@
+@use 'variables' as v;
+
+@mixin tarjeta($padding: 16px) {
+  background: #fff;
+  border-radius: v.$radio;
+  padding: $padding;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.08);
+}
+
+@mixin badge($fondo, $texto: #fff) {
+  display: inline-block;
+  padding: 2px 10px;
+  border-radius: 999px;
+  background: $fondo;
+  color: $texto;
+  font-size: 0.8rem;
+}
+
+@mixin desde($ancho) {
+  @media (min-width: $ancho) {
+    @content;
+  }
+}

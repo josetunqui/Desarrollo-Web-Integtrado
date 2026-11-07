@@ -1,0 +1,48 @@
+@use 'scss/variables' as v;
+
+* {
+  box-sizing: border-box;
+}
+
+body {
+  margin: 0;
+  font-family: v.$fuente;
+  color: v.$negro;
+  background: v.$gris-fondo;
+}
+
+.contenedor {
+  max-width: 1100px;
+  margin: 0 auto;
+  padding: 24px;
+}
+
+button {
+  background: v.$rojo-utp;
+  color: #fff;
+  border: none;
+  border-radius: v.$radio;
+  padding: 8px 16px;
+  cursor: pointer;
+  font-family: inherit;
+  font-weight: 600;
+  transition: opacity 0.2s;
+
+  &:hover {
+    opacity: 0.9;
+  }
+
+  &:disabled {
+    background: v.$gris-texto;
+    cursor: not-allowed;
+    opacity: 0.7;
+  }
+
+  &.secundario {
+    background: v.$negro;
+  }
+}
+
+a {
+  color: v.$rojo-utp;
+}

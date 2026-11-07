@@ -1,0 +1,85 @@
+@use '../../../scss/variables' as v;
+@use '../../../scss/mixins' as m;
+
+.card {
+  @include m.tarjeta(18px);
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+  transition: transform 0.2s, box-shadow 0.2s;
+
+  &:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.12);
+  }
+
+  &.agotado {
+    opacity: 0.65;
+  }
+
+  &__top {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+  }
+}
+
+.categoria {
+  font-size: 11px;
+  text-transform: uppercase;
+  color: v.$gris-texto;
+  font-weight: 700;
+  letter-spacing: 0.5px;
+}
+
+.btn-fav {
+  background: transparent;
+  color: #aaa;
+  font-size: 20px;
+  padding: 0;
+  line-height: 1;
+
+  &.on {
+    color: v.$color-alerta;
+  }
+}
+
+.nombre {
+  margin: 0;
+  font-size: 16px;
+  line-height: 1.3;
+}
+
+.precio {
+  font-size: 20px;
+  font-weight: bold;
+  color: v.$rojo-utp;
+  margin: 0;
+}
+
+.badge {
+  &--ok {
+    @include m.badge(v.$verde-suave, v.$verde-ok);
+  }
+  &--agotado {
+    @include m.badge(v.$rojo-suave, v.$rojo-oscuro);
+  }
+}
+
+.acciones {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-top: auto;
+  padding-top: 10px;
+
+  a {
+    font-size: 14px;
+    text-decoration: none;
+    font-weight: 600;
+
+    &:hover {
+      text-decoration: underline;
+    }
+  }
+}

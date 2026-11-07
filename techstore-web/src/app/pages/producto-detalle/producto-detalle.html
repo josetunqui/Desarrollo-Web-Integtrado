@@ -1,0 +1,25 @@
+@if (producto(); as p) {
+  <article class="detalle">
+    <span class="categoria">{{ p.categoria }}</span>
+    <h2>{{ p.nombre }}</h2>
+    <p class="precio">{{ p.precio | currency:'PEN':'S/ ' }}</p>
+    <p class="stock">Stock disponible: <strong>{{ p.stock }}</strong> unidades</p>
+
+    @if (p.stock > 0) {
+      <div class="comprar-zona">
+        <app-selector-cantidad [(cantidad)]="cantidad" [max]="p.stock" />
+        <button type="button" (click)="agregarAlCarrito()">
+          Agregar {{ cantidad() }} al carrito
+        </button>
+      </div>
+    } @else {
+      <p class="agotado">Producto temporalmente agotado.</p>
+    }
+  </article>
+} @else {
+  <div class="no-encontrado">
+    <p>Producto no encontrado.</p>
+  </div>
+}
+
+<button type="button" class="secundario" (click)="volver()">Volver al catálogo</button>

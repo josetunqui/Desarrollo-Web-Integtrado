@@ -1,0 +1,26 @@
+<h2>Catálogo de Productos</h2>
+
+<nav class="filtros">
+  <a routerLink="/catalogo" routerLinkActive="activo" [routerLinkActiveOptions]="{ exact: true }">Todos</a>
+  @for (c of categorias; track c) {
+    <a routerLink="/catalogo" [queryParams]="{ categoria: c }"
+       routerLinkActive="activo"
+       [routerLinkActiveOptions]="{ exact: true }">{{ c }}</a>
+  }
+</nav>
+
+@if (mensaje()) {
+  <div class="aviso">{{ mensaje() }}</div>
+}
+
+<section class="grilla">
+  @for (p of filtrados(); track p.id) {
+    <app-product-card
+      [producto]="p"
+      [esFavorito]="favs.esFavorito(p.id)"
+      (favorito)="favs.alternar($event)"
+      (agregar)="alAgregar($event)" />
+  } @empty {
+    <p class="vacio">No hay productos disponibles en esta categoría.</p>
+  }
+</section>

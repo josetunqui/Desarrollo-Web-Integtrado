@@ -1,0 +1,57 @@
+@use '../../../scss/variables' as v;
+@use '../../../scss/mixins' as m;
+
+.login-tarjeta {
+  @include m.tarjeta(30px);
+  max-width: 440px;
+  margin: 40px auto;
+
+  h2 {
+    color: v.$rojo-utp;
+    margin-top: 0;
+  }
+
+  .nota {
+    color: v.$gris-texto;
+    font-size: 14px;
+    margin-bottom: 20px;
+  }
+
+  .aviso-volver {
+    background: v.$rojo-suave;
+    color: #8a0410;
+    padding: 10px 14px;
+    border-radius: 8px;
+    margin-bottom: 16px;
+    font-size: 14px;
+  }
+}
+
+.form-login {
+  display: flex;
+  flex-direction: column;
+  gap: 14px;
+
+  .campo {
+    display: flex;
+    flex-direction: column;
+
+    label {
+      font-size: 14px;
+      font-weight: 600;
+      margin-bottom: 4px;
+    }
+
+    input {
+      padding: 9px 12px;
+      border: 1px solid v.$gris-borde;
+      border-radius: 8px;
+      font-size: 15px;
+    }
+  }
+
+  .btn {
+    margin-top: 8px;
+    width: 100%;
+  }
+}

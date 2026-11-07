@@ -1,0 +1,26 @@
+<article class="card" [class.agotado]="agotado()">
+  <div class="card__top">
+    <span class="categoria">{{ producto().categoria }}</span>
+    <button type="button" class="btn-fav" [class.on]="esFavorito()" (click)="onFavorito()" title="Favorito">
+      {{ esFavorito() ? '★' : '☆' }}
+    </button>
+  </div>
+
+  <h3 class="nombre">{{ producto().nombre }}</h3>
+  <p class="precio">{{ producto().precio | currency:'PEN':'S/ ' }}</p>
+
+  <div class="stock-info">
+    @if (agotado()) {
+      <span class="badge badge--agotado">Agotado</span>
+    } @else {
+      <span class="badge badge--ok">Stock: {{ producto().stock }}</span>
+    }
+  </div>
+
+  <div class="acciones">
+    <a [routerLink]="['/productos', producto().id]">Ver detalle</a>
+    <button type="button" (click)="onAgregar()" [disabled]="agotado()">
+      {{ agotado() ? 'Agotado' : 'Agregar' }}
+    </button>
+  </div>
+</article>

@@ -1,0 +1,5 @@
+<div class="selector">
+  <button type="button" (click)="restar()" [disabled]="cantidad() <= 1">-</button>
+  <span class="valor">{{ cantidad() }}</span>
+  <button type="button" (click)="sumar()" [disabled]="cantidad() >= max()">+</button>
+</div>

@@ -1,0 +1,47 @@
+@use '../../../scss/variables' as v;
+@use '../../../scss/mixins' as m;
+
+.detalle {
+  @include m.tarjeta(28px);
+  margin-bottom: 20px;
+
+  .categoria {
+    text-transform: uppercase;
+    font-size: 12px;
+    font-weight: 700;
+    color: v.$gris-texto;
+  }
+
+  h2 {
+    margin: 8px 0;
+    font-size: 26px;
+  }
+
+  .precio {
+    font-size: 28px;
+    font-weight: bold;
+    color: v.$rojo-utp;
+    margin: 8px 0;
+  }
+
+  .stock {
+    color: v.$gris-texto;
+  }
+
+  .comprar-zona {
+    display: flex;
+    align-items: center;
+    gap: 16px;
+    margin-top: 16px;
+  }
+
+  .agotado {
+    color: v.$rojo-oscuro;
+    font-weight: bold;
+  }
+}
+
+.no-encontrado {
+  @include m.tarjeta(20px);
+  margin-bottom: 16px;
+}

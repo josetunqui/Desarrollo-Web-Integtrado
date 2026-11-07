@@ -1,0 +1,51 @@
+<h2>Mi Carrito de Compras</h2>
+
+@if (carrito.items().length === 0) {
+  <div class="vacio-box">
+    <p>Tu carrito está vacío.</p>
+    <a routerLink="/catalogo">Explorar el catálogo</a>
+  </div>
+} @else {
+  <div class="tabla-contenedor">
+    <table class="tabla">
+      <thead>
+        <tr>
+          <th>Producto</th>
+          <th>Cantidad</th>
+          <th>Precio Unitario</th>
+          <th>Subtotal</th>
+          <th>Acción</th>
+        </tr>
+      </thead>
+      <tbody>
+        @for (item of carrito.items(); track item.producto.id) {
+          <tr>
+            <td><strong>{{ item.producto.nombre }}</strong></td>
+            <td>
+              <div class="cantidad-controles">
+                <button type="button" (click)="carrito.cambiarCantidad(item.producto.id, item.cantidad - 1)">-</button>
+                <span>{{ item.cantidad }}</span>
+                <button type="button"
+                        [disabled]="item.cantidad >= item.producto.stock"
+                        (click)="carrito.cambiarCantidad(item.producto.id, item.cantidad + 1)">+</button>
+              </div>
+            </td>
+            <td>{{ item.producto.precio | currency:'PEN':'S/ ' }}</td>
+            <td><strong>{{ item.producto.precio * item.cantidad | currency:'PEN':'S/ ' }}</strong></td>
+            <td>
+              <button type="button" class="btn-quitar" (click)="carrito.quitar(item.producto.id)">Quitar</button>
+            </td>
+          </tr>
+        }
+      </tbody>
+    </table>
+  </div>
+
+  <div class="resumen">
+    <p class="total">Total general: <span>{{ carrito.total() | currency:'PEN':'S/ ' }}</span></p>
+    <div class="acciones-carrito">
+      <button type="button" class="secundario" (click)="carrito.vaciar()">Vaciar carrito</button>
+      <a routerLink="/catalogo" class="btn-seguir">Seguir comprando</a>
+    </div>
+  </div>
+}

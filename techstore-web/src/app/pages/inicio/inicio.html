@@ -1,0 +1,9 @@
+<section class="hero">
+  <h1>Bienvenido a TechStore Perú</h1>
+  <p>Laptops, monitores y accesorios de alta tecnología con garantía oficial.</p>
+  <div class="enlaces">
+    <a routerLink="/catalogo">Ver catálogo completo</a>
+    <a routerLink="/catalogo" [queryParams]="{ categoria: 'laptops' }">Ver solo laptops</a>
+    <a [routerLink]="['/productos', 1]">Ver producto destacado</a>
+  </div>
+</section>

@@ -1,0 +1,35 @@
+@use '../../../scss/variables' as v;
+@use '../../../scss/mixins' as m;
+
+.error-404 {
+  @include m.tarjeta(40px);
+  text-align: center;
+  max-width: 500px;
+  margin: 40px auto;
+
+  h1 {
+    font-size: 80px;
+    color: v.$rojo-utp;
+    margin: 0;
+    line-height: 1;
+  }
+
+  h2 {
+    margin: 12px 0 8px;
+  }
+
+  p {
+    color: v.$gris-texto;
+    margin-bottom: 24px;
+  }
+
+  .btn-inicio {
+    display: inline-block;
+    background: v.$rojo-utp;
+    color: #fff;
+    padding: 10px 20px;
+    border-radius: v.$radio;
+    text-decoration: none;
+    font-weight: 600;
+  }
+}

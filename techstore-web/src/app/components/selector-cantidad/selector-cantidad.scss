@@ -1,0 +1,26 @@
+@use '../../../scss/variables' as v;
+
+.selector {
+  display: inline-flex;
+  align-items: center;
+  gap: 12px;
+  margin: 12px 0;
+
+  button {
+    width: 34px;
+    height: 34px;
+    padding: 0;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 18px;
+    border-radius: 6px;
+  }
+
+  .valor {
+    min-width: 24px;
+    text-align: center;
+    font-weight: bold;
+    font-size: 16px;
+  }
+}

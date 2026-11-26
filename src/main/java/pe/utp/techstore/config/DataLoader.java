@@ -54,9 +54,19 @@ public class DataLoader implements CommandLineRunner {
     }
 
     private void asegurarUsuario(String username, String rawPassword, String rol) {
-        if (usuarioRepository.findByUsername(username).isEmpty()) {
+        usuarioRepository.findByUsername(username).ifPresentOrElse(u -> {
+            boolean claveOk = u.getPassword() != null
+                    && u.getPassword().startsWith("$2")
+                    && passwordEncoder.matches(rawPassword, u.getPassword());
+            if (!claveOk || !rol.equals(u.getRol())) {
+                u.setPassword(passwordEncoder.encode(rawPassword));
+                u.setRol(rol);
+                usuarioRepository.save(u);
+                System.out.println(">> Usuario '" + username + "' actualizado con clave/rol de prueba.");
+            }
+        }, () -> {
             usuarioRepository.save(new Usuario(username, passwordEncoder.encode(rawPassword), rol));
-        }
+        });
     }
 
     private Categoria crearCategoria(String nombre) {

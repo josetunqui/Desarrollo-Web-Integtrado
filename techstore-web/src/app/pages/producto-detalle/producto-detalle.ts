@@ -1,31 +1,40 @@
 import { Component, computed, inject, input, signal } from '@angular/core';
 import { CurrencyPipe } from '@angular/common';
-import { Router } from '@angular/router';
+import { httpResource } from '@angular/common/http';
+import { Router, RouterLink } from '@angular/router';
+import { environment } from '../../../environments/environment';
+import { Producto } from '../../core/models/producto.model';
+import { mensajeError } from '../../core/utils/mensaje-error';
 import { SelectorCantidad } from '../../components/selector-cantidad/selector-cantidad';
-import { ProductoService } from '../../services/producto-service';
 import { CarritoService } from '../../services/carrito-service';
 
 @Component({
   selector: 'app-producto-detalle',
-  imports: [CurrencyPipe, SelectorCantidad],
+  imports: [CurrencyPipe, RouterLink, SelectorCantidad],
   templateUrl: './producto-detalle.html',
   styleUrl: './producto-detalle.scss',
 })
 export class ProductoDetalle {
-  private productos = inject(ProductoService);
-  private carrito = inject(CarritoService);
-  private router = inject(Router);
+  private readonly carrito = inject(CarritoService);
+  private readonly router = inject(Router);
 
-  // Mismo nombre que el parámetro :id de la ruta
-  id = input.required<string>();
+  // Parámetro :id de la ruta (withComponentInputBinding)
+  readonly id = input.required<string>();
 
-  producto = computed(() => this.productos.buscarPorId(Number(this.id())));
-  cantidad = signal(1);
+  // Reto 1 (Semana 14): detalle del producto vía GET /api/productos/{id} con httpResource
+  protected readonly producto = httpResource<Producto>(
+    () => `${environment.apiUrl}/productos/${this.id()}`
+  );
+
+  protected readonly error = computed(() =>
+    this.producto.error() ? mensajeError(this.producto.error()) : ''
+  );
+
+  protected readonly cantidad = signal(1);
 
   agregarAlCarrito(): void {
-    const p = this.producto();
-    if (!p) return;
-    this.carrito.agregar(p, this.cantidad());
+    if (!this.producto.hasValue()) return;
+    this.carrito.agregar(this.producto.value(), this.cantidad());
     this.router.navigate(['/carrito']);
   }
 
@@ -33,4 +42,3 @@ export class ProductoDetalle {
     this.router.navigate(['/catalogo']);
   }
 }
-

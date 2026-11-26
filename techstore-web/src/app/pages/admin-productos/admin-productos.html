@@ -1,0 +1,67 @@
+<h1>Administrar productos <small style="font-size:13px;color:#E30613;">solo ROLE_ADMIN</small></h1>
+
+<form class="tarjeta" [formGroup]="form" (ngSubmit)="guardar()"
+      style="display:grid; grid-template-columns:2fr 1.4fr 1fr 1fr auto; gap:10px; align-items:end;">
+  <div>
+    <label for="nombre">Nombre</label>
+    <input id="nombre" formControlName="nombre" placeholder="Ej. Webcam Logitech C920" />
+  </div>
+  <div>
+    <label for="categoria">Categoría</label>
+    <select id="categoria" formControlName="categoria">
+      <option value="Laptops">Laptops</option>
+      <option value="Accesorios">Accesorios</option>
+      <option value="Monitores">Monitores</option>
+    </select>
+  </div>
+  <div>
+    <label for="precio">Precio</label>
+    <input id="precio" type="number" formControlName="precio" />
+  </div>
+  <div>
+    <label for="stock">Stock</label>
+    <input id="stock" type="number" formControlName="stock" />
+  </div>
+  <button class="btn-rojo" type="submit" [disabled]="guardando()">
+    {{ guardando() ? 'Guardando...' : 'Agregar' }}
+  </button>
+</form>
+
+@if (aviso()) {
+  <div class="alerta ok">{{ aviso() }}</div>
+}
+@if (error()) {
+  <div class="alerta error">{{ error() }}</div>
+}
+
+@if (cargando()) {
+  <p class="cargando">Cargando productos...</p>
+} @else {
+  <table style="margin-top:14px;">
+    <thead>
+      <tr>
+        <th>ID</th>
+        <th>Nombre</th>
+        <th>Categoría</th>
+        <th>Precio</th>
+        <th>Stock</th>
+        <th>Acciones</th>
+      </tr>
+    </thead>
+    <tbody>
+      @for (p of productos(); track p.id) {
+        <tr>
+          <td>{{ p.id }}</td>
+          <td>{{ p.nombre }}</td>
+          <td>{{ p.categoria }}</td>
+          <td>{{ p.precio | currency: 'PEN' : 'S/ ' }}</td>
+          <td>{{ p.stock }}</td>
+          <td style="display:flex; gap:8px;">
+            <a class="btn-gris" style="text-decoration:none;" [routerLink]="['/admin/productos', p.id, 'editar']">Editar</a>
+            <button class="btn-gris" type="button" (click)="eliminar(p)">Eliminar</button>
+          </td>
+        </tr>
+      }
+    </tbody>
+  </table>
+}

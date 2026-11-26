@@ -1,10 +1,12 @@
-import { Component, computed, inject, input, signal } from '@angular/core';
+import { Component, computed, effect, inject, input, signal } from '@angular/core';
+import { httpResource } from '@angular/common/http';
 import { RouterLink, RouterLinkActive } from '@angular/router';
+import { environment } from '../../../environments/environment';
+import { Producto } from '../../core/models/producto.model';
+import { mensajeError } from '../../core/utils/mensaje-error';
 import { ProductCard } from '../../components/product-card/product-card';
-import { ProductoService } from '../../services/producto-service';
 import { CarritoService } from '../../services/carrito-service';
 import { FavoritosService } from '../../services/favoritos-service';
-import { Producto } from '../../models/producto';
 
 @Component({
   selector: 'app-catalogo',
@@ -13,26 +15,39 @@ import { Producto } from '../../models/producto';
   styleUrl: './catalogo.scss',
 })
 export class Catalogo {
-  private productos = inject(ProductoService);
-  private carrito = inject(CarritoService);
-  protected favs = inject(FavoritosService);
+  private readonly carrito = inject(CarritoService);
+  protected readonly favs = inject(FavoritosService);
 
-  // Llega desde la URL: /catalogo?categoria=laptops
-  categoria = input<string>();
+  // Query param opcional (?categoria=laptops) del Taller 12
+  readonly categoria = input<string>();
 
-  categorias = ['laptops', 'accesorios', 'monitores'];
-  mensaje = signal('');
+  protected readonly busqueda = signal('');
+  protected readonly categorias = ['Laptops', 'Accesorios', 'Monitores'];
+  protected readonly mensaje = signal('');
 
-  filtrados = computed(() => {
-    const c = this.categoria();
-    const todos = this.productos.lista();
-    return c ? todos.filter((p) => p.categoria.toLowerCase() === c.toLowerCase()) : todos;
-  });
+  constructor() {
+    effect(() => {
+      const cat = this.categoria();
+      this.busqueda.set(cat ?? '');
+    });
+  }
+
+  // httpResource (Angular 22): se vuelve a pedir automáticamente cuando cambia busqueda()
+  protected readonly productos = httpResource<Producto[]>(
+    () => ({
+      url: `${environment.apiUrl}/productos`,
+      params: { q: this.busqueda() }, // GET /api/productos?q=texto
+    }),
+    { defaultValue: [] }
+  );
+
+  protected readonly error = computed(() =>
+    this.productos.error() ? mensajeError(this.productos.error()) : ''
+  );
 
   alAgregar(producto: Producto): void {
     this.carrito.agregar(producto);
-    this.mensaje.set(producto.nombre + ' se agregó al carrito');
+    this.mensaje.set(`${producto.nombre} se agregó al carrito`);
     setTimeout(() => this.mensaje.set(''), 3000);
   }
 }
-

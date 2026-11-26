@@ -1,29 +1,27 @@
 package pe.utp.techstore.security;
 
+import io.jsonwebtoken.Claims;
 import io.jsonwebtoken.JwtException;
 import jakarta.servlet.FilterChain;
 import jakarta.servlet.ServletException;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
+import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.core.context.SecurityContextHolder;
-import org.springframework.security.core.userdetails.UserDetails;
-import org.springframework.security.core.userdetails.UserDetailsService;
-import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.stereotype.Component;
 import org.springframework.web.filter.OncePerRequestFilter;
 
 import java.io.IOException;
+import java.util.List;
 
 @Component
 public class JwtAuthenticationFilter extends OncePerRequestFilter {
 
     private final JwtService jwt;
-    private final UserDetailsService uds;
 
-    public JwtAuthenticationFilter(JwtService jwt, UserDetailsService uds) {
+    public JwtAuthenticationFilter(JwtService jwt) {
         this.jwt = jwt;
-        this.uds = uds;
     }
 
     @Override
@@ -34,17 +32,17 @@ public class JwtAuthenticationFilter extends OncePerRequestFilter {
         String header = req.getHeader("Authorization");
         if (header != null && header.startsWith("Bearer ")) {
             try {
-                String token = header.substring(7);
-                String username = jwt.extraerUsername(token);
-                UserDetails ud = uds.loadUserByUsername(username);
+                Claims claims = jwt.extraerClaims(header.substring(7));
+                String rol = claims.get("rol", String.class);
+                var autoridad = new SimpleGrantedAuthority(rol != null ? rol : "ROLE_CLIENTE");
                 var auth = new UsernamePasswordAuthenticationToken(
-                        ud, null, ud.getAuthorities());
+                        claims.getSubject(), null, List.of(autoridad));
                 SecurityContextHolder.getContext().setAuthentication(auth);
-            } catch (JwtException | IllegalArgumentException | UsernameNotFoundException e) {
-                // Token inválido o vencido: no se autentica
+            } catch (JwtException | IllegalArgumentException e) {
+                // Token inválido o vencido: limpia el contexto -> 401
+                SecurityContextHolder.clearContext();
             }
         }
         chain.doFilter(req, res);
     }
 }
-

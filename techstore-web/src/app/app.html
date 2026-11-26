@@ -1,5 +1,9 @@
 <app-header />
 
+@if (carga.activo()) {
+  <div class="barra-carga"></div>
+}
+
 <main class="contenedor">
   <router-outlet />
 </main>

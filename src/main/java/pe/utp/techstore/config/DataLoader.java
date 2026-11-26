@@ -30,37 +30,39 @@ public class DataLoader implements CommandLineRunner {
 
     @Override
     public void run(String... args) {
-        // Cargar usuarios si no existen
-        if (usuarioRepository.count() == 0) {
-            usuarioRepository.save(new Usuario("admin", passwordEncoder.encode("admin123"), "ADMIN"));
-            usuarioRepository.save(new Usuario("gerente1", passwordEncoder.encode("clave123"), "ADMIN"));
-            usuarioRepository.save(new Usuario("vendedor1", passwordEncoder.encode("vendedor123"), "VENDEDOR"));
-            usuarioRepository.save(new Usuario("cliente1", passwordEncoder.encode("cliente123"), "CLIENTE"));
-            System.out.println(">> Usuarios iniciales cargados en TechStore.");
-        }
+        // Usuarios de prueba (incluye admin/clave123 y cliente/clave123 de la Semana 14)
+        asegurarUsuario("admin", "clave123", "ADMIN");
+        asegurarUsuario("cliente", "clave123", "CLIENTE");
+        asegurarUsuario("gerente1", "clave123", "ADMIN");
+        asegurarUsuario("vendedor1", "vendedor123", "VENDEDOR");
+        asegurarUsuario("cliente1", "cliente123", "CLIENTE");
 
         // Cargar categorías y productos iniciales si la BD está vacía
         if (categoriaRepository.count() == 0) {
-            Categoria laptops = new Categoria();
-            laptops.setNombre("Laptops");
-            categoriaRepository.save(laptops);
+            Categoria laptops = crearCategoria("Laptops");
+            Categoria accesorios = crearCategoria("Accesorios");
+            Categoria monitores = crearCategoria("Monitores");
 
-            Categoria accesorios = new Categoria();
-            accesorios.setNombre("Accesorios");
-            categoriaRepository.save(accesorios);
-
-            Categoria monitores = new Categoria();
-            monitores.setNombre("Monitores");
-            categoriaRepository.save(monitores);
-
-            crearProducto("Laptop Lenovo IdeaPad", 2499.0, 8, laptops);
-            crearProducto("Mouse Logitech M280", 49.9, 25, accesorios);
-            crearProducto("Teclado Redragon K552", 159.0, 0, accesorios);
-            crearProducto("Monitor Samsung 24\"", 599.0, 4, monitores);
-            crearProducto("Laptop HP Victus", 3199.0, 3, laptops);
-            crearProducto("Audífonos Sony WH-CH520", 229.0, 12, accesorios);
-            System.out.println(">> Categorías y productos iniciales cargados.");
+            crearProducto("Laptop Lenovo IdeaPad 5", 2899.9, 12, laptops);
+            crearProducto("Mouse Logitech M720", 159.0, 40, accesorios);
+            crearProducto("Monitor LG 27\" 4K", 1349.0, 8, monitores);
+            crearProducto("Teclado mecánico Redragon", 219.9, 25, accesorios);
+            crearProducto("Laptop HP Victus 15", 3599.0, 5, laptops);
+            crearProducto("Audífonos Sony WH-1000XM5", 1299.0, 10, accesorios);
+            System.out.println(">> Categorías y productos iniciales cargados en TechStore.");
         }
+    }
+
+    private void asegurarUsuario(String username, String rawPassword, String rol) {
+        if (usuarioRepository.findByUsername(username).isEmpty()) {
+            usuarioRepository.save(new Usuario(username, passwordEncoder.encode(rawPassword), rol));
+        }
+    }
+
+    private Categoria crearCategoria(String nombre) {
+        Categoria c = new Categoria();
+        c.setNombre(nombre);
+        return categoriaRepository.save(c);
     }
 
     private void crearProducto(String nombre, double precio, int stock, Categoria cat) {
@@ -72,4 +74,3 @@ public class DataLoader implements CommandLineRunner {
         productoRepository.save(p);
     }
 }
-

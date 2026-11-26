@@ -6,7 +6,11 @@
     </button>
   </div>
 
-  <h3 class="nombre">{{ producto().nombre }}</h3>
+  <h3 class="nombre">
+    <a [routerLink]="['/productos', producto().id]" style="color:inherit; text-decoration:none;">
+      {{ producto().nombre }}
+    </a>
+  </h3>
   <p class="precio">{{ producto().precio | currency:'PEN':'S/ ' }}</p>
 
   <div class="stock-info">
@@ -24,4 +28,3 @@
     </button>
   </div>
 </article>
-

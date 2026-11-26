@@ -1,4 +1,11 @@
-<h2>Catálogo de Productos</h2>
+<h1>Catálogo de productos</h1>
+
+<div class="buscador">
+  <input #texto [value]="busqueda()"
+         placeholder="Buscar: laptop, mouse, monitor..."
+         (keyup.enter)="busqueda.set(texto.value)" />
+  <button class="btn-rojo" type="button" (click)="busqueda.set(texto.value)">Buscar</button>
+</div>
 
 <nav class="filtros">
   <a routerLink="/catalogo" routerLinkActive="activo" [routerLinkActiveOptions]="{ exact: true }">Todos</a>
@@ -10,18 +17,26 @@
 </nav>
 
 @if (mensaje()) {
-  <div class="aviso">{{ mensaje() }}</div>
+  <div class="alerta ok">{{ mensaje() }}</div>
 }
 
-<section class="grilla">
-  @for (p of filtrados(); track p.id) {
-    <app-product-card
-      [producto]="p"
-      [esFavorito]="favs.esFavorito(p.id)"
-      (favorito)="favs.alternar($event)"
-      (agregar)="alAgregar($event)" />
-  } @empty {
-    <p class="vacio">No hay productos disponibles en esta categoría.</p>
-  }
-</section>
-
+@if (productos.isLoading()) {
+  <p class="cargando">Cargando productos...</p>
+} @else if (error()) {
+  <div class="alerta error" style="display:flex; justify-content:space-between; align-items:center; gap:12px;">
+    <span>{{ error() }}</span>
+    <button class="btn-gris" type="button" (click)="productos.reload()">Reintentar</button>
+  </div>
+} @else if (productos.value().length === 0) {
+  <div class="alerta info">No se encontraron productos para "{{ busqueda() }}".</div>
+} @else {
+  <section class="grilla">
+    @for (p of productos.value(); track p.id) {
+      <app-product-card
+        [producto]="p"
+        [esFavorito]="favs.esFavorito(p.id)"
+        (favorito)="favs.alternar($event)"
+        (agregar)="alAgregar($event)" />
+    }
+  </section>
+}

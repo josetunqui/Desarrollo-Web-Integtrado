@@ -1,13 +1,22 @@
 @use '../../../scss/variables' as v;
 
+.buscador {
+  display: flex;
+  gap: 10px;
+  margin-bottom: 16px;
+
+  input {
+    flex: 1;
+  }
+}
+
 .filtros {
   display: flex;
   flex-wrap: wrap;
-  gap: 12px;
+  gap: 10px;
   margin-bottom: 20px;
 
   a {
-    text-transform: capitalize;
     text-decoration: none;
     padding: 7px 16px;
     border-radius: v.$radio;
@@ -23,23 +32,8 @@
   }
 }
 
-.aviso {
-  background: v.$verde-ok;
-  color: #fff;
-  padding: 10px 16px;
-  border-radius: v.$radio;
-  margin-bottom: 16px;
-  font-weight: 500;
-}
-
 .grilla {
   display: grid;
   gap: 18px;
-  grid-template-columns: repeat(auto-fill, minmax(240px, 1fr));
+  grid-template-columns: repeat(auto-fill, minmax(260px, 1fr));
 }
-
-.vacio {
-  color: v.$gris-texto;
-  font-style: italic;
-}
-

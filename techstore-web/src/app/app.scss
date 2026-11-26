@@ -1,5 +1,17 @@
 @use '../scss/variables' as v;
 
+.barra-carga {
+  height: 4px;
+  background: v.$rojo-utp;
+  animation: pulso 1s infinite;
+}
+
+@keyframes pulso {
+  50% {
+    opacity: 0.3;
+  }
+}
+
 .pie {
   text-align: center;
   padding: 24px;
@@ -8,4 +20,3 @@
   border-top: 1px solid v.$gris-borde;
   margin-top: 40px;
 }
-

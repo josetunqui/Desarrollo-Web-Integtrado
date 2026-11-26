@@ -1,8 +1,7 @@
 import { Component, inject } from '@angular/core';
 import { Router, RouterLink, RouterLinkActive } from '@angular/router';
+import { AuthService } from '../../core/services/auth.service';
 import { CarritoService } from '../../services/carrito-service';
-import { AuthService } from '../../services/auth-service';
-import { FavoritosService } from '../../services/favoritos-service';
 
 @Component({
   selector: 'app-header',
@@ -11,14 +10,12 @@ import { FavoritosService } from '../../services/favoritos-service';
   styleUrl: './header.scss',
 })
 export class Header {
-  protected carrito = inject(CarritoService);
-  protected auth = inject(AuthService);
-  protected favs = inject(FavoritosService);
-  private router = inject(Router);
+  protected readonly carrito = inject(CarritoService);
+  protected readonly auth = inject(AuthService);
+  private readonly router = inject(Router);
 
   salir(): void {
-    this.auth.salir();
-    this.router.navigate(['/inicio']);
+    this.auth.logout();
+    this.router.navigate(['/catalogo']);
   }
 }
-

@@ -1,14 +1,22 @@
-@if (producto(); as p) {
-  <article class="detalle">
-    <span class="categoria">{{ p.categoria }}</span>
-    <h2>{{ p.nombre }}</h2>
-    <p class="precio">{{ p.precio | currency:'PEN':'S/ ' }}</p>
-    <p class="stock">Stock disponible: <strong>{{ p.stock }}</strong> unidades</p>
+<a routerLink="/catalogo" style="display:inline-block; margin-bottom:14px; text-decoration:none; font-weight:600;">
+  ← Volver al catálogo
+</a>
 
-    @if (p.stock > 0) {
+@if (producto.isLoading()) {
+  <p class="cargando">Cargando producto #{{ id() }}...</p>
+} @else if (error()) {
+  <div class="alerta error">{{ error() }}</div>
+} @else if (producto.hasValue()) {
+  <article class="detalle">
+    <span class="categoria">{{ producto.value().categoria }}</span>
+    <h2>{{ producto.value().nombre }}</h2>
+    <p class="precio">{{ producto.value().precio | currency: 'PEN' : 'S/ ' }}</p>
+    <p class="stock">Stock disponible: <strong>{{ producto.value().stock }}</strong> unidades</p>
+
+    @if (producto.value().stock > 0) {
       <div class="comprar-zona">
-        <app-selector-cantidad [(cantidad)]="cantidad" [max]="p.stock" />
-        <button type="button" (click)="agregarAlCarrito()">
+        <app-selector-cantidad [(cantidad)]="cantidad" [max]="producto.value().stock" />
+        <button type="button" class="btn-rojo" (click)="agregarAlCarrito()">
           Agregar {{ cantidad() }} al carrito
         </button>
       </div>
@@ -16,11 +24,6 @@
       <p class="agotado">Producto temporalmente agotado.</p>
     }
   </article>
-} @else {
-  <div class="no-encontrado">
-    <p>Producto no encontrado.</p>
-  </div>
 }
 
 <button type="button" class="secundario" (click)="volver()">Volver al catálogo</button>
-

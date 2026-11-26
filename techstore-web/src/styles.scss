@@ -11,20 +11,74 @@ body {
   background: v.$gris-fondo;
 }
 
+h1 {
+  font-size: 24px;
+  margin: 0 0 16px;
+}
+
 .contenedor {
   max-width: 1100px;
   margin: 0 auto;
   padding: 24px;
 }
 
-button {
+.tarjeta {
+  background: #fff;
+  border: 1px solid #e3e3e3;
+  border-radius: 10px;
+  padding: 20px;
+}
+
+.alerta {
+  padding: 12px 14px;
+  border-radius: 8px;
+  margin: 12px 0;
+
+  &.error {
+    background: #fdecec;
+    color: #a40000;
+    border: 1px solid #f5b5b5;
+  }
+
+  &.ok {
+    background: #eaf7ee;
+    color: #1d6b34;
+    border: 1px solid #b6e2c3;
+  }
+
+  &.info {
+    background: #eef3fb;
+    color: #23466e;
+    border: 1px solid #c4d5ee;
+  }
+}
+
+input,
+select {
+  width: 100%;
+  padding: 9px 10px;
+  border: 1px solid #ccc;
+  border-radius: 6px;
+  font-size: 14px;
+}
+
+label {
+  display: block;
+  font-size: 13px;
+  margin: 10px 0 4px;
+  font-weight: bold;
+}
+
+button,
+.btn-rojo {
   background: v.$rojo-utp;
   color: #fff;
   border: none;
-  border-radius: v.$radio;
-  padding: 8px 16px;
+  border-radius: 6px;
+  padding: 9px 16px;
   cursor: pointer;
   font-family: inherit;
+  font-size: 14px;
   font-weight: 600;
   transition: opacity 0.2s;
 
@@ -33,14 +87,60 @@ button {
   }
 
   &:disabled {
-    background: v.$gris-texto;
+    background: #e99;
     cursor: not-allowed;
-    opacity: 0.7;
+    opacity: 0.8;
   }
 
   &.secundario {
     background: v.$negro;
   }
+}
+
+.btn-gris {
+  background: #fff;
+  color: #333;
+  border: 1px solid #bbb;
+  padding: 7px 12px;
+  border-radius: 6px;
+  cursor: pointer;
+  font-size: 13px;
+  font-weight: 500;
+
+  &:hover {
+    background: #f2f2f2;
+    opacity: 1;
+  }
+}
+
+.cargando {
+  color: #666;
+  font-style: italic;
+}
+
+.campo-error {
+  color: #a40000;
+  font-size: 12px;
+  margin-top: 3px;
+}
+
+table {
+  width: 100%;
+  border-collapse: collapse;
+  background: #fff;
+}
+
+th,
+td {
+  padding: 9px 10px;
+  border-bottom: 1px solid #eee;
+  text-align: left;
+  font-size: 14px;
+}
+
+th {
+  background: #222;
+  color: #fff;
 }
 
 a {
